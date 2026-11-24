@@ -11,6 +11,30 @@ This repository is a showcase. It holds documentation only. There is no source c
 - Church offices and pastors: manage people, events, payments and giving for one church.
 - A district office: see every church it oversees, provision a new one, and run schema changes across all of them.
 
+## Screens
+
+Taken on 2026-11-24 from a local run of the current code. Every person, church and district shown is invented.
+
+<p>
+  <img src="shots/01-parent-home-phone.png" alt="Parent home on a phone" width="250">
+  <img src="shots/02-sunday-parent-pass-phone.png" alt="Sunday pass with a QR code on a parent's phone" width="250">
+  <img src="shots/09-messages-phone.png" alt="Messages on a phone" width="250">
+</p>
+
+Parent home, the Sunday pass a parent shows at drop-off and pick-up, and messages.
+
+<img src="shots/07-district-home-desktop.png" alt="District home listing the churches a district oversees" width="800">
+
+District home: the next event and every church the district oversees.
+
+<img src="shots/06-church-office-home-desktop.png" alt="Church office home" width="800">
+
+Church office home.
+
+<img src="shots/10-sign-in-page.png" alt="Sign-in page" width="800">
+
+Sign-in.
+
 ## Systems and their status
 
 BUILT means the code, the pages and tests exist in the source. PARTIAL means part of it exists. Nothing here was run on the day this page was written; the statuses come from reading the source and counting files.
