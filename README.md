@@ -1,107 +1,57 @@
-# Gather
+# ARK
 
-**A church and district platform for families, volunteers, and the people who lead them.**
+ARK is a web application for churches and the district offices that oversee them. It handles the parts of a church family's week that involve children and money: checking kids in and out, registering for events and camps, paying, giving, staffing, and sending messages. It was formerly developed under the name Gather.
 
-Gather is one app for a church family's week: checking kids in and out, serving on a team,
-signing up for events and camps, paying for them, and staying in touch. It is built for
-small and mid-sized churches and the district offices that oversee them: parents on a phone
-in a parking lot, volunteers at a check-in table, and a district office that needs to see
-every church at once.
+This repository is a showcase. It holds documentation only. There is no source code here, and all rights are reserved. The source lives in a private repository.
 
-Ranger Ready (a boys' ministry) and Girls Ministries are sections of the same app, not
-separate products.
+## Who it serves
 
-## One app, four levels
+- Parents, on a phone: register a child, sign waivers, pay, receive a pass for Sunday drop-off, see messages.
+- Volunteers and leaders, at a check-in table: look up a child, check them in and out, see allergy flags, run a roster.
+- Church offices and pastors: manage people, events, payments and giving for one church.
+- A district office: see every church it oversees, provision a new one, and run schema changes across all of them.
 
-Family, church, district, national. A parent sees their own kids. A leader sees their group.
-A pastor sees their church. The district office sees every church in the district.
+## Systems and their status
 
-## What it does today
+BUILT means the code, the pages and tests exist in the source. PARTIAL means part of it exists. Nothing here was run on the day this page was written; the statuses come from reading the source and counting files.
 
-- **Check-in and checkout.** Leaders check kids in and release them to an approved adult.
-  It keeps working with no signal and syncs when bars come back.
-- **Serving roles.** Leaders, sponsors, pastors, office staff, and district admins each get
-  the screens their job needs and nothing more. Background checks are tracked per person.
-- **Events and registrations.** Sessions, pricing, registration windows, waivers, medical
-  forms, staffing, schedules, and a live event-day view.
-- **Payments with fees shown honestly.** A parent sees every line before paying. Cards run
-  through Stripe; pay-at-the-door is always an option. Tithes and offerings are designed and
-  marked "coming soon", not shipped yet.
-- **Messages.** Families and leaders message inside the app; recipients also get an email,
-  and district leaders can read messages to keep kids safe.
-- **District oversight.** Every event, every church's readiness, unpaid balances, exports,
-  and announcements in one place.
-- **View As for support.** A named support account can see the app exactly as another person
-  does, read-only, so nobody has to share a password to get help.
-- **What's New.** Every change appears in a What's New pop-up for every role at next sign-in,
-  and the illustrated user manual is updated with it.
+| System | Status | What it does |
+|---|---|---|
+| Child check-in, events | BUILT | Gate check-in and a muster view for camps and weekends. Pickup uses codes. |
+| Child check-in, Sunday kids church | BUILT | The parent's phone shows a QR pass. Staff scan it at drop-off and pick-up. |
+| Offline check-in bundle | PARTIAL | A design stub. It is not shipped and not claimed to work. |
+| Family profiles and approved pickup adults | BUILT | Households, co-parent invitations, a list of adults approved for pickup, allergy and medical notes per child. |
+| Event registration | BUILT | Sessions, pricing, waivers, registration windows, waitlists, invitations, a live event-day view. |
+| Background check status tracking | PARTIAL | Records status, expiry and who verified it. It stores no documents, by design. It does not run checks. |
+| Role-based access | BUILT | One permission table decides every access check. A snapshot test fails if the table changes unnoticed. |
+| Giving and payments | BUILT, switched on by configuration | Event payments, church giving with funds and receipts, and refunds through a hosted payment page. Nothing is charged unless payment keys are configured. |
+| Messaging | BUILT for email, PARTIAL for text | In-app messages with email notices through a configurable provider. Text messages use an adapter for a self-run Android gateway. It is off unless configured and falls back to email. |
+| Volunteer staffing | PARTIAL | Event staffing roles, schedule stations and rotation groups. A recurring weekly volunteer rota was not found. |
+| District control plane | BUILT | A control database tracks districts, schema versions and approvals. Provisioning, migration and tenant export are command line operations. |
 
-## How it is put together
+## Numbers
 
-- **TypeScript on Node, no framework, no npm dependencies.** Server, router, encryption, and
-  database all use what ships with Node, so there is no third-party supply chain to audit.
-- **One database per district.** Each district gets its own SQLite file; no table ever holds
-  two districts' data. A control-plane database tracks districts and schema versions.
-- **Forward-only, versioned migrations**, applied one district at a time with a dry run and
-  stop-on-failure.
-- **Registry-driven ministries.** A ministry is rows of data (words, colors, emblems). Adding
-  one is a checklist and a conformance test, not a copied page.
-- **Tests plus a browser rehearsal harness.** A large suite on Node's built-in test runner,
-  and a harness that drives a real browser through whole event weekends and captures what
-  each person actually sees.
+Counted on 2026-11-24 from the private repository, last commit dated 2026-10-31.
 
-### By the numbers (as of 2026-09-24)
-
-| | |
-|---|---|
-| Commits on the main branch | 2,698 |
-| Database migrations | 98 |
-| Test files | 616 |
-| HTTP routes | 396 (42 public, on an explicit allowlist) |
-
-## Safety measures
-
-The app holds children's names, medical notes, and family payments, so safety was the first
-design constraint:
-
-- **Medical and incident notes are encrypted per record** (AES-256-GCM envelope encryption,
-  per-district keys, key versioning and rotation).
-- **Districts are isolated** in separate database files, with tests that attack the boundary.
-- **One authorization table** decides every permission; a snapshot test fails if it drifts.
-- **Ministry separation** is scanned by tests so one ministry's data never shows on another's
-  screens.
-- **Sign-in is easy and hard to abuse:** emailed links and codes, lockouts an attacker cannot
-  turn against a real user, hashed session tokens, MFA for roles that see medical data, and
-  step-up re-authentication for sensitive actions.
-- **Every form is CSRF-protected**, and a test checks every route to prove it.
-- **Email links are never used up by a GET**, so a mail scanner cannot spend someone's link.
-- **A strict Content-Security-Policy**, body caps, upload checks, rate limits, and redaction
-  of personal data in logs.
-- **A tamper-evident audit log** records who read or changed a child's record.
-
-Full write-up: [SECURITY.md](SECURITY.md).
+- 4,606 commits across all branches, of which 2,701 are on the main line. The first commit is dated 2026-09-01.
+- 777 test files (files ending in .test.ts). The suite was not run for this page, so no pass count is claimed.
+- 122 schema migration versions.
+- 474 route registrations in the router, 411 behind a session and 63 public. Counted by text, so a route registered dynamically would not appear.
+- 0 runtime npm dependencies. The two development dependencies are the TypeScript compiler and Node type definitions. Two small third-party libraries for QR codes are vendored as source files, as the architecture document explains.
+- About 176,000 lines under src and about 185,000 lines under tests.
 
 ## How it is built
 
-I direct an agent studio. I set the laws the product has to obey, write the rulings when a
-screen is wrong, and review every screen before it ships. The code is written by AI agents
-under my direction, one job at a time, each with a written brief and a narrow leash. Every
-change is checked by a second agent that did not write it, by the test suite, by a
-real-browser rehearsal, and then by me. When something slips through, it becomes a written
-law and a test so it cannot slip through twice. I am accountable for what ships.
+A single TypeScript server on Node, server-rendered pages, no client framework, no build step, and one SQLite database file per district. [ARCHITECTURE.md](ARCHITECTURE.md) describes the request path, the control plane and the migrations.
 
-## Screenshots
+The code was written and checked by AI agents directed by one founder, who made every product decision and approved every release. [HOW-IT-IS-BUILT.md](HOW-IT-IS-BUILT.md) describes that method, its scale, and its limits. The product itself makes no calls to any AI service.
 
-Test data from a demo setup only. No real people or families.
+## Read next
 
-| | |
-|---|---|
-| Parent Home ![Parent Home](shots/01-parent-home.png) | District Home ![District Home](shots/02-district-home.png) |
-| District Home, empty ![District Home empty](shots/03-district-home-empty.png) | Leader roster ![Roster](shots/04-leader-roster.png) |
-| Event on a phone ![Event](shots/05-event-phone.png) | Event-day overview ![Event day](shots/06-event-day-overview.png) |
-| Schedule, station done ![Schedule](shots/07-event-schedule.png) | Payment ![Payment](shots/08-payment.png) |
-| Messages ![Messages](shots/09-messages-phone.png) | What's New ![What's New](shots/10-whats-new-phone.png) |
+- [ARCHITECTURE.md](ARCHITECTURE.md): request path, data layout, control plane, adapters.
+- [SECURITY.md](SECURITY.md): how children's data is protected, with the gaps listed.
+- [HOW-IT-IS-BUILT.md](HOW-IT-IS-BUILT.md): how one founder built it by directing AI agents.
 
----
+## Not covered here
 
-Source is private. Ask for a walkthrough.
+Which server runs the product, customer counts and pricing are not described in this repository. No outside penetration test is claimed.
