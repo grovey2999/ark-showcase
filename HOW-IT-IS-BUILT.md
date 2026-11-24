@@ -6,7 +6,7 @@ One founder directs. AI agents write and check the code. This page describes tha
 
 The agents are the build crew. They are Claude models run through Claude Code, each with a written job description checked into the repository.
 
-The ARK product makes no calls to any AI service. A search of the application source, scripts and tools found no AI provider, model name or API call. No AI feature is planned in this repository, and none is described here.
+The ARK product makes no calls to any AI service. A search of the application source, scripts and tools found no AI provider, model name or API call. No AI feature exists in the product today, so none is described here.
 
 ## The roles
 

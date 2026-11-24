@@ -1,6 +1,6 @@
 # ARK
 
-ARK is a web application for churches and the district offices that oversee them. It handles the parts of a church family's week that involve children and money: checking kids in and out, registering for events and camps, paying, giving, staffing, and sending messages. It was formerly developed under the name Gather.
+ARK is a web application for churches and the district offices that oversee them. It handles the parts of a church family's week that involve children and money: checking kids in and out, registering for events and camps, paying, giving, staffing, and sending messages. A ministry program, such as a boys' or girls' program, runs inside the same app as configuration, not as a separate product. It was formerly developed under the name Gather.
 
 This repository is a showcase. It holds documentation only. There is no source code here, and all rights are reserved. The source lives in a private repository.
 

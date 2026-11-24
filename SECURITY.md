@@ -32,14 +32,13 @@ This page describes how ARK protects children's data, and where the protection s
 - **No outside penetration test is claimed.** No report or engagement record was found in the repository. All testing described here is the project's own.
 - **No certification is claimed.** There is no SOC 2, ISO 27001 or similar attestation.
 - **The offline check-in bundle is a design stub.** The source says so in its header. The design stores only an allergy flag on the device, encrypts the bundle and expires it after 72 hours, but it is not shipped and should not be treated as working.
-- **Master key source.** By default the master key comes from an environment variable. A provider that uses a cloud key management service exists in the source. This page does not claim which one any deployment uses.
+- **Master key source.** By default the master key comes from an environment variable. A provider for AWS Key Management Service exists in the source. This page does not claim which one any deployment uses.
 - **Scrypt, not argon2id.** The zero-dependency rule rules out an argon2 library. Scrypt is the standard-library choice and the threat model records the tradeoff.
 - **The audit log detects tampering and does not prevent it.** Someone with raw access to the database file can still edit rows. The chain makes that visible.
 - **Rate limiting is in process.** The request-volume limiter lives in memory in one process. There is no CAPTCHA.
 - **The secret scan is simple pattern matching.** It is not a replacement for a dedicated scanner.
 - **Backup schedule is not claimed.** The scripts and configuration exist. This page does not claim how often they run in production or when the last drill ran.
 - **Test results are not claimed.** There are 777 test files. They were not run for this page.
-- **Text messages** have no inbound opt-out webhook. Opting out is done through a link in the message.
 - **Mixed role defaults.** The second factor is required for a defined set of staff roles when a district turns it on. Parents sign in with a password or emailed link without it.
 
 ## Reporting a problem

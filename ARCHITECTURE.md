@@ -66,7 +66,7 @@ External services sit behind narrow interfaces so the core does not depend on an
 - **Payments.** A small client calls Stripe's HTTP API with `fetch`. Checkout is Stripe's hosted page, so card numbers never reach the server. Payments are off unless keys are configured. A refund splitting module and a fee module compute the labeled lines shown to the payer.
 - **Email.** One sender interface with two providers selectable by configuration. Sign-in links, codes, receipts and notices go through it. A development outbox replaces it in tests.
 - **Text messages.** One provider-agnostic interface, off unless configured. The adapter in the source drives a self-run Android gateway. Where text is off or fails, the notice goes by email.
-- **Key management.** Master keys come from the environment by default. A key provider interface has a second implementation that calls a cloud key management service over its HTTP API with request signing written in the codebase. Which one a deployment uses is configuration.
+- **Key management.** Master keys come from the environment by default. A key provider interface has a second implementation that calls AWS Key Management Service over its HTTP API with request signing written in the codebase. Which one a deployment uses is configuration.
 
 ## Backups
 
